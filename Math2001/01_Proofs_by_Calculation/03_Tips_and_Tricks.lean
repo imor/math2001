@@ -218,10 +218,24 @@ example {t : ℚ} (ht : t ^ 2 - 4 = 0) :
     _ = 0 * (t ^ 2 + 3 * t + 1) + 10 * t + 2 := by rw [ht]
     _ = 10 * t + 2 := by ring
 
+-- Solution copied from: https://github.com/little-yus/the-mechanics-of-proof-exercises/blob/fcbe10b01bf812490b30d758aa162f482718db23/Math2001/01_Proofs_by_Calculation/03_Tips_and_Tricks.lean#L185-L200
 example {x y : ℝ} (h1 : x + 3 = 5) (h2 : 2 * x - y * x = 0) : y = 2 :=
   calc
     y
-      = -2 + (y * x / x) + 2 := by ring
+      = (y * 2) / 2 := by ring
+    _ = (y * (5 - 3)) / 2 := by ring
+    _ = (y * 5 - y * 3) / 2 := by ring
+    _ = (y * 5 - y * (x + 3 - x)) / 2 := by ring
+    _ = (y * 5 - y * (5 - x)) / 2 := by rw [h1]
+    _ = (y * 5 - y * 5 + y * x) / 2 := by ring
+    _ = (y * x) / 2 := by ring
+    _ = (y * x + 2 * x - 2 * x) / 2 := by ring
+    _ = (2 * x - (2 * x - y * x)) / 2 := by ring
+    _ = (2 * x - 0) / 2 := by rw [h2]
+    _ = x := by ring
+    _ = x + 3 - 3 := by ring
+    _ = 5 - 3 := by rw [h1]
+    _ = 2 := by ring
 
 example {p q r : ℚ} (h1 : p + q + r = 0) (h2 : p * q + p * r + q * r = 2) :
     p ^ 2 + q ^ 2 + r ^ 2 = -4 :=
